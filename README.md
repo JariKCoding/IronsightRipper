@@ -1,7 +1,7 @@
 # IronsightRipper
 
 A game asset extractor for Ironsight.
-[![Downloads](https://img.shields.io/github/downloads/JerriGaming/IronsightRipper/total.svg) [![license](https://img.shields.io/github/license/JerriGaming/IronsightRipper.svg)]()
+![Downloads](https://img.shields.io/github/downloads/JerriGaming/IronsightRipper/total.svg) [![license](https://img.shields.io/github/license/JerriGaming/IronsightRipper.svg)]()
 
 ## How to Use 
 
