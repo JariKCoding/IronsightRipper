@@ -26,6 +26,11 @@ All work was done purely on the wpg files through a Hex Editor, legally obtained
 
 **IronsightRipper is currently in alpha, and with that in mind, bugs, errors, you know, the bad stuff.**
 
+## Known issues
+
+- Weight painting on meshes arent great
+- Meshes dont have vertex normals
+
 ## Download
 
 The latest version can be found on the [Releases Page](https://github.com/JerriGaming/IronsightRipper/releases).
