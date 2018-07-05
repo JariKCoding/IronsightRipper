@@ -1,0 +1,14 @@
+G:\c#\IronSightRipper\IronSightRipper\bin\Release\IronSightRipper.exe.config
+G:\c#\IronSightRipper\IronSightRipper\bin\Release\IronSightRipper.exe
+G:\c#\IronSightRipper\IronSightRipper\bin\Release\IronSightRipper.pdb
+G:\c#\IronSightRipper\IronSightRipper\bin\Release\zlibnet.dll
+G:\c#\IronSightRipper\IronSightRipper\obj\Release\IronSightRipper.csproj.CoreCompileInputs.cache
+G:\c#\IronSightRipper\IronSightRipper\obj\Release\IronSightRipper.csproj.CopyComplete
+G:\c#\IronSightRipper\IronSightRipper\obj\Release\IronSightRipper.exe
+G:\c#\IronSightRipper\IronSightRipper\obj\Release\IronSightRipper.pdb
+C:\Users\Jari\Documents\GitHub\IronsightRipper\IronSightRipper\bin\Release\IronSightRipper.exe.config
+C:\Users\Jari\Documents\GitHub\IronsightRipper\IronSightRipper\bin\Release\IronSightRipper.exe
+C:\Users\Jari\Documents\GitHub\IronsightRipper\IronSightRipper\bin\Release\IronSightRipper.pdb
+C:\Users\Jari\Documents\GitHub\IronsightRipper\IronSightRipper\obj\Release\IronSightRipper.csproj.CoreCompileInputs.cache
+C:\Users\Jari\Documents\GitHub\IronsightRipper\IronSightRipper\obj\Release\IronSightRipper.exe
+C:\Users\Jari\Documents\GitHub\IronsightRipper\IronSightRipper\obj\Release\IronSightRipper.pdb

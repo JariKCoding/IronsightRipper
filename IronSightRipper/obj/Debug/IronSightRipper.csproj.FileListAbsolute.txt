@@ -1,0 +1,16 @@
+I:\c#\IronSightRipper\IronSightRipper\obj\Debug\IronSightRipper.csprojAssemblyReference.cache
+I:\c#\IronSightRipper\IronSightRipper\obj\Debug\IronSightRipper.csproj.CoreCompileInputs.cache
+I:\c#\IronSightRipper\IronSightRipper\bin\Debug\IronSightRipper.exe.config
+I:\c#\IronSightRipper\IronSightRipper\bin\Debug\IronSightRipper.exe
+I:\c#\IronSightRipper\IronSightRipper\bin\Debug\IronSightRipper.pdb
+I:\c#\IronSightRipper\IronSightRipper\obj\Debug\IronSightRipper.exe
+I:\c#\IronSightRipper\IronSightRipper\obj\Debug\IronSightRipper.pdb
+I:\c#\IronSightRipper\IronSightRipper\bin\Debug\zlibnet.dll
+I:\c#\IronSightRipper\IronSightRipper\obj\Debug\IronSightRipper.csproj.CopyComplete
+G:\c#\IronSightRipper\IronSightRipper\bin\Debug\IronSightRipper.exe.config
+G:\c#\IronSightRipper\IronSightRipper\bin\Debug\IronSightRipper.exe
+G:\c#\IronSightRipper\IronSightRipper\bin\Debug\IronSightRipper.pdb
+G:\c#\IronSightRipper\IronSightRipper\obj\Debug\IronSightRipper.csprojAssemblyReference.cache
+G:\c#\IronSightRipper\IronSightRipper\obj\Debug\IronSightRipper.csproj.CoreCompileInputs.cache
+G:\c#\IronSightRipper\IronSightRipper\obj\Debug\IronSightRipper.exe
+G:\c#\IronSightRipper\IronSightRipper\obj\Debug\IronSightRipper.pdb
