@@ -28,7 +28,7 @@ All work was done purely on the wpg files through a Hex Editor, legally obtained
 
 ## Known issues
 
-- Weight painting on meshes arent great
+- Joints dont have rotation
 - Meshes dont have vertex normals
 
 ## Download
