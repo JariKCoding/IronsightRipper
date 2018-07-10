@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Windows.Media.Media3D;
 
 namespace IronSightRipper
 {
     class MayaUtil
     {
-        public static void ExportMaFile(string FileName, List<float[,]> VertexList, List<float[,]> UVList, List<float[,]> FacesList, float[,] boneCoors, int[] boneparents, List<string[]> MaterialList, List<float[,]> WeightList)
+        public static void ExportMaFile(string FileName, List<float[,]> VertexList, List<float[,]> UVList, List<float[,]> FacesList, float[,] boneCoors, int[] boneparents, List<Vector3D> BoneAngles, List<string[]> MaterialList, List<float[,]> WeightList)
         {
             StreamWriter output = NewMayaFile(FileName);
             
@@ -56,6 +57,9 @@ namespace IronSightRipper
                 float Xcoor = 0;
                 float Ycoor = 0;
                 float Zcoor = 0;
+                double XDir = 0;
+                double YDir = 0;
+                double ZDir = 0;
                 string jointname = "tag_" + modelname + "_" + i;
                 string parentname = "";
                 if (boneparents[i] == -1)
@@ -63,6 +67,9 @@ namespace IronSightRipper
                     Xcoor = boneCoors[i, 0];
                     Ycoor = boneCoors[i, 1];
                     Zcoor = boneCoors[i, 2];
+                    XDir = BoneAngles[i].X;
+                    YDir = BoneAngles[i].Y;
+                    ZDir = BoneAngles[i].Z;
                     parentname = "Joints";
                 }
                 else
@@ -70,9 +77,12 @@ namespace IronSightRipper
                     Xcoor = boneCoors[i, 0] - boneCoors[boneparents[i], 0];
                     Ycoor = boneCoors[i, 1] - boneCoors[boneparents[i], 1];
                     Zcoor = boneCoors[i, 2] - boneCoors[boneparents[i], 2];
+                    XDir = BoneAngles[i].X - BoneAngles[boneparents[i]].X;
+                    YDir = BoneAngles[i].Y - BoneAngles[boneparents[i]].Y;
+                    ZDir = BoneAngles[i].Z - BoneAngles[boneparents[i]].Z;
                     parentname = "tag_" + modelname + "_" + (boneparents[i]);
                 }
-                NewJoint(output, Xcoor, Ycoor, Zcoor, jointname, parentname);
+                NewJoint(output, Xcoor, Ycoor, Zcoor, jointname, parentname, XDir, YDir, ZDir);
             }
             NewMayaBindFile(FileName, modelname, WeightList, boneparents);
             output.Close();
@@ -126,48 +136,51 @@ namespace IronSightRipper
                 {
                     string jointname = "tag_" + modelname + "_" + j;
                     
-                    int low = -1;
+                    int[] LowerVertex = {-1, -1, -1, -1 };
                     for (int h = 0; h < WeightList[i].GetLength(0); h++)
                     {
-                        if (WeightList[i][h,0] == j)
+                        
+                        for (int g = 0; g < 4; g++)
                         {
-                            if(WeightList[i][h, 0] == 1 && WeightList[i][h, 1] == 0 && WeightList[i][h, 2] == 0 && WeightList[i][h, 3] == 0)
+                            if (WeightList[i][h, g] == j)
                             {
+
                                 if (h + 1 == WeightList[i].GetLength(0))
                                 {
-                                    outputStream.Write(System.Environment.NewLine + "\tskinPercent -tv " + jointname + " " + WeightList[i][h, 4] + " $clu " + meshname + ".vtx[" + low + ":" + h + "];");
+                                    if(LowerVertex[g] == -1 && WeightList[i][h, 4 + g] != 0)
+                                    {
+                                        outputStream.Write(System.Environment.NewLine + "\tskinPercent -tv tag_" + modelname + "_" + WeightList[i][h, g] + " " + WeightList[i][h, 4 + g] + " $clu " + meshname + ".vtx[" + h + "];");
+                                    }
+                                    else if (WeightList[i][h, 4 + g] != 0)
+                                    {
+                                        outputStream.Write(System.Environment.NewLine + "\tskinPercent -tv tag_" + modelname + "_" + WeightList[i][h, g] + " " + WeightList[i][h, 4 + g] + " $clu " + meshname + ".vtx[" + LowerVertex[g] + ":" + h + "];");
+                                    }
                                 }
-                                else if (WeightList[i][h + 1, 0] == j && low == -1)
+                                else
                                 {
-                                    low = h;
-                                }
-                                else if (WeightList[i][h + 1, 0] != j && low != h)
-                                {
-                                    outputStream.Write(System.Environment.NewLine + "\tskinPercent -tv " + jointname + " " + WeightList[i][h, 4] + " $clu " + meshname + ".vtx[" + low + ":" + h + "];");
-                                    low = -1;
-                                }
-                                else if (low == -1)
-                                {
-                                    outputStream.Write(System.Environment.NewLine + "\tskinPercent -tv " + jointname + " " + WeightList[i][h, 4] + " $clu " + meshname + ".vtx[" + h + "];");
-                                }
-                            }
-                            else
-                            {
-                                if (WeightList[i][h, 0] != 0)
-                                {
-                                    outputStream.Write(System.Environment.NewLine + "\tskinPercent -tv tag_" + modelname + "_" + WeightList[i][h, 0] + " " + WeightList[i][h, 4] + " $clu " + meshname + ".vtx[" + h + "];");
-                                }
-                                if (WeightList[i][h, 1] != 0)
-                                {
-                                    outputStream.Write(System.Environment.NewLine + "\tskinPercent -tv tag_" + modelname + "_" + WeightList[i][h, 1] + " " + WeightList[i][h, 5] + " $clu " + meshname + ".vtx[" + h + "];");
-                                }
-                                if (WeightList[i][h, 2] != 0)
-                                {
-                                    outputStream.Write(System.Environment.NewLine + "\tskinPercent -tv tag_" + modelname + "_" + WeightList[i][h, 2] + " " + WeightList[i][h, 6] + " $clu " + meshname + ".vtx[" + h + "];");
-                                }
-                                if (WeightList[i][h, 3] != 0)
-                                {
-                                    outputStream.Write(System.Environment.NewLine + "\tskinPercent -tv tag_" + modelname + "_" + WeightList[i][h, 3] + " " + WeightList[i][h, 7] + " $clu " + meshname + ".vtx[" + h + "];");
+                                    if (LowerVertex[g] == -1)
+                                    {
+                                        if(WeightList[i][h + 1, g] == WeightList[i][h, 0 + g] && WeightList[i][h + 1, 4 + g] == WeightList[i][h, 4 + g] && WeightList[i][h, 4 + g] != 0)
+                                        {
+                                            LowerVertex[g] = h;
+                                        }
+                                        else if (WeightList[i][h, 4 + g] != 0)
+                                        {
+                                            outputStream.Write(System.Environment.NewLine + "\tskinPercent -tv tag_" + modelname + "_" + WeightList[i][h, g] + " " + WeightList[i][h, 4 + g] + " $clu " + meshname + ".vtx[" + h + "];");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (WeightList[i][h + 1, g] == WeightList[i][h, g] && WeightList[i][h + 1, 4 + g] == WeightList[i][h, 4 + g])
+                                        {
+
+                                        }
+                                        else if(WeightList[i][h, 4 + g] != 0)
+                                        {
+                                            outputStream.Write(System.Environment.NewLine + "\tskinPercent -tv tag_" + modelname + "_" + WeightList[i][h, g] + " " + WeightList[i][h, 4 + g] + " $clu " + meshname + ".vtx[" + LowerVertex[g] + ":" + h + "];");
+                                            LowerVertex[g] = -1;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -227,7 +240,7 @@ namespace IronSightRipper
             outputstream.Write(System.Environment.NewLine + "setAttr \".vif\" yes;");
         }
 
-        public static void NewJoint(StreamWriter output, float Xcoor, float Ycoor, float Zcoor, string jointname, string parentname)
+        public static void NewJoint(StreamWriter output, float Xcoor, float Ycoor, float Zcoor, string jointname, string parentname, double XDir, double YDir, double ZDir)
         {
             output.Write(System.Environment.NewLine + System.Environment.NewLine + "createNode joint -n \"" + jointname + "\" -p \"" + parentname + "\";");
             output.Write(System.Environment.NewLine + "addAttr -ci true -sn \"liw\" -ln \"lockInfluenceWeights\" -bt \"lock\" -min 0 -max 1 -at \"bool\";");
@@ -237,7 +250,8 @@ namespace IronSightRipper
             output.Write(System.Environment.NewLine + "setAttr \".mnrl\" -type \"double3\" -360 -360 -360 ;");
             output.Write(System.Environment.NewLine + "setAttr \".mxrl\" -type \"double3\" 360 360 360 ;");
             output.Write(System.Environment.NewLine + "setAttr \".radi\"   0.50;");
-            output.Write(System.Environment.NewLine + "setAttr \".jo\" -type \"double3\" 0.000000 -0.000000 0.000000;");
+            //output.Write(System.Environment.NewLine + "setAttr \".jo\" -type \"double3\" "+ XDir + " " + YDir + " " + ZDir + ";");
+            output.Write(System.Environment.NewLine + "setAttr \".jo\" -type \"double3\" 0 0 0;");
             output.Write(System.Environment.NewLine + "setAttr \".scale\" -type \"double3\" 1.000000 1.000000 1.000000;");
         }
 

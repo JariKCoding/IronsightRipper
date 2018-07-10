@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
 namespace IronSightRipper
 {
@@ -33,9 +34,16 @@ namespace IronSightRipper
 
                 reader.Seek(36, SeekOrigin.Begin);
                 int BoneCount = reader.ReadInt32();
+                int BoneArraySize = BoneCount;
 
-                float[,] boneCoors = new float[BoneCount, 3];
-                int[] boneparents = new int[BoneCount];
+                if (BoneCount == 0)
+                {
+                    BoneArraySize = 1;
+                }
+
+                float[,] boneCoors = new float[BoneArraySize, 3];
+                int[] boneparents = new int[BoneArraySize];
+                List<Vector3D> BoneAngles = new List<Vector3D>();
 
                 for (int j = 0; j < BoneCount; j++)
                 {
@@ -46,11 +54,35 @@ namespace IronSightRipper
                     float boneCoorX = System.BitConverter.ToSingle(reader.ReadBytes(4), 0);
                     float boneCoorZ = System.BitConverter.ToSingle(reader.ReadBytes(4), 0);
                     float boneCoorY = System.BitConverter.ToSingle(reader.ReadBytes(4), 0) * -1;
+                    double boneDir1 = System.BitConverter.ToSingle(reader.ReadBytes(4), 0);
+                    double boneDir2 = System.BitConverter.ToSingle(reader.ReadBytes(4), 0);
+                    double boneDir3 = System.BitConverter.ToSingle(reader.ReadBytes(4), 0);
+                    double boneDir4 = System.BitConverter.ToSingle(reader.ReadBytes(4), 0);
+                    boneDir1 = Math.Round(boneDir1, 6);
+                    boneDir2 = Math.Round(boneDir2, 6);
+                    boneDir3 = Math.Round(boneDir3, 6);
+                    boneDir4 = Math.Round(boneDir4, 6);
+                    
+                    Quaternion quat = new Quaternion(boneDir1, boneDir2, boneDir3, boneDir4);
+                    Vector3D EulerAngle = new Vector3D(0,0,0);
+                    EulerAngle = QuatUtil.setFromQuaternion(quat, EulerAngle);
+                    BoneAngles.Add(EulerAngle);
+
                     boneparents[j] = BoneParent;
                     boneCoors[j, 0] = boneCoorX;
                     boneCoors[j, 1] = boneCoorY;
                     boneCoors[j, 2] = boneCoorZ;
                     reader.Seek(pos, SeekOrigin.Begin);
+                }
+
+                if (BoneCount == 0)
+                {
+                    boneparents[0] = -1;
+                    boneCoors[0, 0] = 0;
+                    boneCoors[0, 1] = 0;
+                    boneCoors[0, 2] = 0;
+                    Vector3D EulerAngle = new Vector3D(0, 0, 0);
+                    BoneAngles.Add(EulerAngle);
                 }
 
                 int Weirdextrathing = reader.ReadInt32();
@@ -83,6 +115,7 @@ namespace IronSightRipper
                     {
                         float[,] vertexCoorValues2 = new float[VSecSize / 28, 3];
                         float[,] UVValues2 = new float[VSecSize / 28, 2];
+                        float[,] WeightValues2 = new float[VSecSize / 28, 8];
 
                         for (int h = 0; h < (VSecSize / 28); h++)
                         {
@@ -91,12 +124,14 @@ namespace IronSightRipper
                             vertexCoorValues2[h, 2] = System.BitConverter.ToSingle(reader.ReadBytes(4), 0);
                             vertexCoorValues2[h, 1] = System.BitConverter.ToSingle(reader.ReadBytes(4), 0) * -1;
                             UVValues2[h,0] = reader.ReadInt16() / 1024.0f;
-                            UVValues2[h,1] = reader.ReadInt16() / 1024.0f;
-
+                            UVValues2[h,1] = 1 - reader.ReadInt16() / 1024.0f;
+                            WeightValues2[h, 0] = 0;
+                            WeightValues2[h, 4] = 1;
                             reader.Seek(pos, SeekOrigin.Begin);
                         }
                         vertexCoorValues = vertexCoorValues2;
                         UVValues = UVValues2;
+                        WeightValues = WeightValues2;
                     }
                     if (WShift == 3)
                     {
@@ -154,8 +189,9 @@ namespace IronSightRipper
                             }
                             reader.Seek(pos, SeekOrigin.Begin);
                         }
-                        WeightList.Add(WeightValues);
                     }
+
+                    WeightList.Add(WeightValues);
 
                     int FSecSize = reader.ReadInt32();
 
@@ -227,10 +263,9 @@ namespace IronSightRipper
                 }
                 ObjUtil.ExportObjFile(outputname, VertexList, UVList, FacesList);
 
-                MayaUtil.ExportMaFile(outputname, VertexList, UVList, FacesList, boneCoors, boneparents, MaterialList, WeightList);
+                MayaUtil.ExportMaFile(outputname, VertexList, UVList, FacesList, boneCoors, boneparents, BoneAngles, MaterialList, WeightList);
             }
             Console.WriteLine("Converted model : " + modelname);
         }
-    }
-
+    }   
 }
