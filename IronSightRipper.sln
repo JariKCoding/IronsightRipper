@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27703.2026
+VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronSightRipper", "IronSightRipper\IronSightRipper.csproj", "{C91A866E-FD27-4952-9311-62DFACCF833D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronsightRipper", "IronsightRipper\IronsightRipper.csproj", "{D7173CAA-DD3B-416F-A613-552E99B6EA7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C91A866E-FD27-4952-9311-62DFACCF833D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C91A866E-FD27-4952-9311-62DFACCF833D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C91A866E-FD27-4952-9311-62DFACCF833D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C91A866E-FD27-4952-9311-62DFACCF833D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7173CAA-DD3B-416F-A613-552E99B6EA7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7173CAA-DD3B-416F-A613-552E99B6EA7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7173CAA-DD3B-416F-A613-552E99B6EA7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7173CAA-DD3B-416F-A613-552E99B6EA7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6F343B39-F76B-4B7E-8C2A-D3AC5480F5CE}
+		SolutionGuid = {049AE1AB-080C-4276-853B-716FB5DC62FD}
 	EndGlobalSection
 EndGlobal

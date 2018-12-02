@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.IO.Compression;
+using System.Runtime.InteropServices;
 
 /*
     Copyright (c) 2018 Philip/Scobalula - Utility Lib
@@ -26,7 +27,7 @@ using System.IO.Compression;
     SOFTWARE.
 */
 
-namespace IronSightRipper
+namespace IronsightRipper
 {
     class ScobUtil
     {
@@ -74,11 +75,11 @@ namespace IronSightRipper
     }
 
     /// <summary>
-    /// Common Hash Functions
+    /// Deflate/ZLIB Utilities
     /// </summary>
-    public static class HashUtil
+    public static class DeflateUtil
     {
-        public static MemoryStream Decode(byte[] data, string FileNameString)
+        public static MemoryStream Decode(byte[] data)
         {
             MemoryStream output = new MemoryStream();
             MemoryStream input = new MemoryStream(data);
@@ -127,6 +128,15 @@ namespace IronSightRipper
         public static void Seek(this BinaryReader br, long offset, SeekOrigin seekOrigin)
         {
             br.BaseStream.Seek(offset, seekOrigin);
+        }
+
+        public static T ReadStruct<T>(this BinaryReader br)
+        {
+            byte[] data = br.ReadBytes(Marshal.SizeOf<T>());
+            GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
+            T theStructure = (T)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(T));
+            handle.Free();
+            return theStructure;
         }
 
         /// <summary>

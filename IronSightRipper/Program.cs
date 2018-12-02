@@ -1,14 +1,10 @@
-﻿/*
-To extract sounds from fsb files download the program here: http://aluigi.altervista.org/search.php?src=fsbext
-*/
-using System;
-using System.IO;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 
-namespace IronSightRipper
+namespace IronsightRipper
 {
     class Program
     {
@@ -17,7 +13,7 @@ namespace IronSightRipper
             string[] files = args.Where(x => Path.GetExtension(x) == ".wpg" && File.Exists(x)).ToArray();
 
             Console.WriteLine("");
-            Console.WriteLine("IronSight Model,Texture & Audio Ripper by JerriGaming (With a lot of help from Scobalula & DTZxPorter)");
+            Console.WriteLine("IronSight Model,Texture & Audio Ripper by JariK (With a lot of help from Scobalula & DTZxPorter)");
             Console.WriteLine("To export sounds from fsb files use the following program: http://aluigi.altervista.org/papers.htm#fsbext");
             Console.WriteLine("");
 
@@ -34,10 +30,9 @@ namespace IronSightRipper
                     continue;
                 }
 
-                WPGFile wpgFile = new WPGFile();
                 try
                 {
-                    wpgFile.Decode(file);
+                    WPGFile.Decode(file);
                 }
                 catch (Exception e)
                 {

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("IronSightRipper")]
+[assembly: AssemblyTitle("IronsightRipper")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("IronSightRipper")]
+[assembly: AssemblyProduct("IronsightRipper")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c91a866e-fd27-4952-9311-62dfaccf833d")]
+[assembly: Guid("d7173caa-dd3b-416f-a613-552e99b6ea7e")]
 
 // Version information for an assembly consists of the following four values:
 //

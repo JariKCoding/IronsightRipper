@@ -38,4 +38,4 @@ The latest version can be found on the [Releases Page](https://github.com/JerriG
 ## Credits
 
 * Scobalula (Code from Rottweiler & Meshes info)
-* DTZxPorter (.ma file format example from Wraith)
+* DTZxPorter (.ma file format example from Wraith & SELibDotNet)
